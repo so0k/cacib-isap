@@ -7,8 +7,9 @@ Ensure backup cluster in AWS is available
 
 Using Docker For Mac / Docker For Windows
 
+Do this multipe times
 ```
-docker run -it --rm alpine /bin/sh
+docker run -it alpine /bin/sh
 ```
 
 ```
@@ -19,6 +20,11 @@ uptime
 ```
 
 <kbd>CTRL</kbd>+<kbd>D</kbd>
+
+Clean up containers
+```
+docker container prune
+```
 
 ```
 docker image ls
@@ -50,7 +56,7 @@ apt-get install rolldice
 <kbd>CTRL</kbd>+<kbd>D</kbd>
 
 ```
-docker ps -a
+docker container ls -a
 ```
 
 ```
@@ -82,7 +88,7 @@ Change the code
 ```
 vim app.py
 ```
-Notice application code reloaded.
+Notice application code reloaded...
 
 
 Another simple Python app (Master-Slave)
@@ -124,20 +130,25 @@ docker-compose down --volume
 - Provision multiple hosts locally
 - .. 
 
-```
+```bash
 docker-machine create --driver xhyve manager
 ```
+Note: If network is a concern, do this in advance as well as
 
+```bash
+(cd vote;docker-compose pull)
 ```
+
+```bash
 docker-machine ls
 ```
 
-```
+```bash
 docker-machine ssh manager
 uname -a
 ```
 
-```
+```bash
 docker-machine env manager
 eval $(docker-machine env manager)
 ```
@@ -150,13 +161,19 @@ docker run -d --name static-site -e AUTHOR="Docker Singapore!" -d -p 80:80 so0k/
 docker-machine ip manager
 ```
 
-open website
+open website on manager IP..
+
+Notice also:
 
 ```
 docker system info
 ```
 
 ## Docker Swarm
+
+Create a Swarm of Nodes
+
+Create another node for the swarm
 
 ```
 docker-machine create --driver xhyve worker
@@ -176,10 +193,50 @@ docker swarm join \
      192.168.64.24:2377
 ```
 
+
+## Deploy Stack across swarm
+
+Talk to manager
+```
+eval $(docker-machine env manager)
+```
+
+```bash
+docker stack -h
+```
+
+```bash
+cd vote/
+docker-compose config | less
+docker stack deploy -c docker-compose.yaml vote
+```
+
+```bash
+docker service ls
+```
+
+Ports:
+
+- 8080 for node viz
+- 5000 for voting app
+- 5001 for result app
+
+## Clean up
+
+```
+docker stack rm vote
+```
+
+```bash
+docker-machine rm manager worker
+```
+
 Unset docker environment:
 
 ```
 eval $(docker-machine env -u)
 ```
 
-[What's New in 1.13](https://gist.github.com/so0k/872b798db710e0cb6b4bfc12550a63e0)
+## References
+
+- [What's New in 1.13](https://gist.github.com/so0k/872b798db710e0cb6b4bfc12550a63e0)
