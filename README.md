@@ -239,4 +239,11 @@ eval $(docker-machine env -u)
 
 ## References
 
+- [Static site](https://github.com/docker/labs/tree/master/beginner/static-site)
+- [Compose](https://docs.docker.com/compose/gettingstarted/)
+- [Locust](https://github.com/honestbee/distributed-load-testing)
+- [xhyve driver](https://github.com/zchee/docker-machine-driver-xhyve)
+- [aws driver](https://docs.docker.com/machine/drivers/aws/)
+- [Voting App](https://docs.docker.com/engine/getstarted-voting-app/)
 - [What's New in 1.13](https://gist.github.com/so0k/872b798db710e0cb6b4bfc12550a63e0)
+
