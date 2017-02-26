@@ -1,0 +1,28 @@
+version: '2'
+services:
+    master:
+        image: quay.io/honestbee/locust
+        environment:
+            - "LOCUST_MODE=master"
+            - "TARGET_HOST=http://172.20.0.1:5000"
+            - "LOCUST_SCRIPT=/locust-tasks/tasks.py"
+        volumes:
+            - ./tasks/tasks.py:/locust-tasks/tasks.py
+        networks:
+            locust-nw:
+        ports:
+            - "8089:8089"
+    worker:
+        image: quay.io/honestbee/locust
+        environment:
+            - "LOCUST_MODE=worker"
+            - "LOCUST_MASTER=master"
+            - "TARGET_HOST=http://172.20.0.1:5000"
+            - "LOCUST_SCRIPT=/locust-tasks/tasks.py"
+        volumes:
+            - ./tasks/tasks.py:/locust-tasks/tasks.py
+        networks:
+            locust-nw:
+
+networks:
+    locust-nw:
