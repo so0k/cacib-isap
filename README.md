@@ -1,11 +1,24 @@
 
 # Docker Tech Talk Demo Script
 
-Ensure backup cluster in AWS is available
+This Repository contains the code I used for the live demonstration during the
+tech talk at Credit Agricole - Feb 27, 2016.
+
+The code samples come from exising Docker labs material (see references below).
+
+The [slides are available](https://docs.google.com/presentation/d/1eoj4GNbK256tBYwhZ6U4pW8nfl31FmYc6KJuPZRH4ns/edit?usp=sharing) as well
 
 ## Docker CLI
 
 Using Docker For Mac / Docker For Windows
+
+```
+docker pull alpine
+```
+
+```
+docker image ls
+```
 
 Do this multipe times
 ```
@@ -21,15 +34,6 @@ uptime
 
 <kbd>CTRL</kbd>+<kbd>D</kbd>
 
-Clean up containers
-```
-docker container prune
-```
-
-```
-docker image ls
-```
-
 ```
 docker run -it --rm busybox 
 ```
@@ -43,6 +47,11 @@ docker run -d -p 80:80 --name webserver -v $PWD/static_site:/usr/share/nginx/htm
 ```
 docker stop webserver
 docker rm webserver
+```
+
+Clean up containers
+```
+docker container prune
 ```
 
 ```
